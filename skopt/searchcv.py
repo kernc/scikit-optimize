@@ -285,7 +285,7 @@ class BayesSearchCV(BaseSearchCV):
 
     def __init__(self, estimator, search_spaces, optimizer_kwargs=None,
                  n_iter=50, scoring=None, fit_params=None, n_jobs=1,
-                 n_points=1, refit=True, cv=None, verbose=0, 
+                 n_points=1, iid='deprecated', refit=True, cv=None, verbose=0, 
                  pre_dispatch='2*n_jobs', random_state=None,
                  error_score='raise', return_train_score=False):
 
@@ -300,6 +300,11 @@ class BayesSearchCV(BaseSearchCV):
         # To be consistent with sklearn 0.21+, fit_params should be deprecated
         # in the constructor and be passed in ``fit``.
         self.fit_params = fit_params
+        
+        if iid != "deprecated":
+            warnings.warn("The `iid` parameter has been deprecated "
+                          "and will be ignored.")
+        self.iid=iid
         
         super(BayesSearchCV, self).__init__(
              estimator=estimator, scoring=scoring,
