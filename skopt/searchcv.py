@@ -285,7 +285,7 @@ class BayesSearchCV(BaseSearchCV):
 
     def __init__(self, estimator, search_spaces, optimizer_kwargs=None,
                  n_iter=50, scoring=None, fit_params=None, n_jobs=1,
-                 n_points=1, iid='deprecated', refit=True, cv=None, verbose=0, 
+                 n_points=1, iid='deprecated', refit=True, cv=None, verbose=0,
                  pre_dispatch='2*n_jobs', random_state=None,
                  error_score='raise', return_train_score=False):
 
@@ -300,7 +300,7 @@ class BayesSearchCV(BaseSearchCV):
         # To be consistent with sklearn 0.21+, fit_params should be deprecated
         # in the constructor and be passed in ``fit``.
         self.fit_params = fit_params
-        
+
         if iid != "deprecated":
             warnings.warn("The `iid` parameter has been deprecated "
                           "and will be ignored.")
@@ -425,11 +425,11 @@ class BayesSearchCV(BaseSearchCV):
 
         # if one choose to see train score, "out" will contain train score info
         if self.return_train_score:
-            (_fit_fail,train_scores, test_scores, test_sample_counts,
-             fit_time, score_time, parameters) = zip(*[dic.values() for dic in out])
+            (train_scores, test_scores, test_sample_counts,
+             fit_time, score_time, parameters) = zip(*out)
         else:
-            (_fit_fail,test_scores, test_sample_counts,
-             fit_time, score_time, parameters) = zip(*[dic.values() for dic in out])
+            (test_scores, test_sample_counts,
+             fit_time, score_time, parameters) = zip(*out)
 
         candidate_params = parameters[::n_splits]
         n_candidates = len(candidate_params)
